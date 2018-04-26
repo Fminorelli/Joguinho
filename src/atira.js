@@ -20,7 +20,7 @@ class Atira extends Phaser.Sprite {
             this.kill();
         }, this);
 
-        this.weapon = game.add.weapon(30, 'shot');
+        this.weapon = game.add.weapon(30, 'enemyB');
      
         //  The bullet will be automatically killed when it leaves the world bounds
         this.weapon.bulletKillType = Phaser.Weapon.KILL_WORLD_BOUNDS;

@@ -39,6 +39,7 @@ var hud
 var map
 var scorep1=0
 var scorep2=0
+var Espawn
 
 // grupos
 var obstacles
@@ -78,6 +79,8 @@ var morriSound
 var faliceuSound
 var bossSong
 var bf=0
+var sadEnd
+var mederrubaro
 
 var lf=1
 var of=1
@@ -96,6 +99,7 @@ function preload() {
 
     game.load.image('sky', 'assets/starfield.png')
     game.load.image('plane1', 'assets/airplane3.png')
+    game.load.image('rastro', 'assets/rastro.png')
     game.load.image('shotp1', 'assets/shotp.png')
     game.load.image('shotp2', 'assets/shotp2.png')
 
@@ -106,6 +110,7 @@ function preload() {
 
     game.load.image('laser', 'assets/laser.png')
     game.load.image('beam', 'assets/beam.png')
+    game.load.image('enemyB', 'assets/enemyB.png')
 
     game.load.image('boss', 'assets/boss.png')
     game.load.image('bossBullet', 'assets/bossBullet.png')
@@ -115,7 +120,7 @@ function preload() {
     game.load.image('bolt', 'assets/bolt.png') 
     
     game.load.audio('fundo','assets/fundo.ogg')
-    game.load.audio('hit','assets/hit.ogg')
+    game.load.audio('hit','assets/aiai.ogg')
     game.load.audio('lvl','assets/lvl.ogg')
     game.load.audio('youlose','assets/youlose.ogg')
     game.load.audio('tiro','assets/tiro.ogg')
@@ -125,6 +130,9 @@ function preload() {
     game.load.audio('morri','assets/morri.ogg')
     game.load.audio('faliceu','assets/faliceu.ogg')
     game.load.audio('bossSong','assets/ahh.ogg')
+    game.load.audio('sadEnd','assets/sadEnd.ogg')
+    game.load.audio('mederrubaro','assets/mederrubaro.ogg')
+
 
 
     game.load.text('map1', 'assets/map2.txt');  // arquivo txt do mapa
@@ -149,15 +157,15 @@ function create() {
     endSound=game.add.audio('youlose')
     lifeSound=game.add.audio('life')
     upgradeSound=game.add.audio('upgrade')
-    hitp = game.add.audio('hitp')
-    hitp.volume -= 0.5
-    lifeSound -= 0.5
-
+    hitp=game.add.audio('hitp')
+    
     morriSound=game.add.audio('morri')
     faliceuSound=game.add.audio('faliceu')
     bossSong=game.add.audio('bossSong')
     bossSong.loop=true
-
+    sadEnd=game.add.audio('sadEnd')
+    sadEnd.loop=true
+    mederrubaro=game.add.audio('mederrubaro')
 
     var skyWidth = game.cache.getImage('sky').width
     var skyHeight = game.cache.getImage('sky').height
@@ -173,7 +181,7 @@ function create() {
 
     createExplosions()
 
-    var Espawn = game.time.events.loop(Phaser.Timer.SECOND * 1, readLine, this);
+     Espawn = game.time.events.loop(Phaser.Timer.SECOND * 1, readLine, this);
 
     eventH=game.time.events.loop(Phaser.Timer.SECOND * game.rnd.integerInRange(1, 10), createHeart, this)
     eventF = game.time.events.loop(Phaser.Timer.SECOND * game.rnd.integerInRange(1, 2), createFire, this)
@@ -230,11 +238,28 @@ function create() {
 
  
     player2.events.onKilled.add(function () {
-        morriSound.play()
+        player2.emitter.kill()
+        var s= game.rnd.integerInRange(1, 2)
+        console.log(s)
+        if(s==1){
+            mederrubaro.play()
+        }
+        else{
+            morriSound.play()
+        }
+        
     });
 
     player1.events.onKilled.add(function () {
-        morriSound.play()
+        player1.emitter.kill()
+        var s= game.rnd.integerInRange(1, 2)
+        console.log(s)
+        if(s==1){
+            mederrubaro.play()
+        }
+        else{
+            morriSound.play()
+        }
     });
 
 }
@@ -288,7 +313,7 @@ function readLine() {
     
     if (mapa[row] == undefined) {
         fim=1
-        console.log(mapa[row])
+        //console.log(mapa[row])
         return
     }
     else {
@@ -326,7 +351,7 @@ function readLine() {
         } 
 
     }
-    console.log(row)
+    //console.log(row)
 }
 
 
@@ -505,10 +530,14 @@ function update() {
         game.time.events.remove(eventH);
         game.time.events.remove(eventF);
         game.time.events.remove(eventS);
+        game.time.events.remove(Espawn);
         if(of==1){
-            endSound.play()
+            sadEnd.play()
             of--
         }
+        music.mute=true
+        bossSong.mute=true
+        //sadEnd.play()
     }
 
     if (fim == 1 && obstacles.length == 0) {

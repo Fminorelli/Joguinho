@@ -28,16 +28,17 @@ class Player extends Phaser.Sprite {
         }
 
         this.bullets = bullets
-
-        // particulas de fumaça
-        //this.emitter = game.add.emitter(0, 0, 40);
-        //this.emitter.makeParticles(['smoke']);
-        //this.emitter.setXSpeed(0, 0)
-        //this.emitter.setYSpeed(0, 0)
-        //this.emitter.setAlpha(1, 0, 1000);
-        //this.emitter.setScale(0.7, 0, 0.7, 0, 1000);
-        //this.emitter.start(false, 1000, 50);
-
+         //  Add an emitter for the ship's trail
+        this.emitter = game.add.emitter(this.x, this.y +20, 400);
+        this.emitter.width = 10;
+        this.emitter.makeParticles('rastro');
+        this.emitter.setXSpeed(30, -30);
+        this.emitter.setYSpeed(200, 180);
+        this.emitter.setRotation(50,-50);
+        this.emitter.setAlpha(1, 0.01, 800);
+        this.emitter.setScale(0.05, 0.4, 0.05, 0.4, 2000, Phaser.Easing.Quintic.Out);
+        this.emitter.start(false, 5000, 10);
+       
     }
 
     // move e rotaciona, como em Asteroids
@@ -98,7 +99,7 @@ class Player extends Phaser.Sprite {
         this.fireBullet()
         //this.emitter.emitParticle()
 
-       // this.emitter.emitX = this.x;
-        //this.emitter.emitY = this.y;    
+        this.emitter.emitX = this.x;
+        this.emitter.emitY = this.y;    
     }
 }
