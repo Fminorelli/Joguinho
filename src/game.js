@@ -157,7 +157,9 @@ function create() {
     endSound=game.add.audio('youlose')
     lifeSound=game.add.audio('life')
     upgradeSound=game.add.audio('upgrade')
-    hitp=game.add.audio('hitp')
+    hitp = game.add.audio('hitp')
+    hitp.volume -= 0.3
+    lifeSound-=0.5
     
     morriSound=game.add.audio('morri')
     faliceuSound=game.add.audio('faliceu')
