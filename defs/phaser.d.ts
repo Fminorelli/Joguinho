@@ -1117,6 +1117,8 @@ declare module Phaser {
         constructor(x?: number, y?: number, width?: number, height?: number);
 
         bottom: number;
+        centerX: number;
+        centerY: number;
         empty: boolean;
         height: number;
         left: number;
@@ -1815,7 +1817,7 @@ declare module Phaser {
         destroy(destroyChildren?: boolean): void;
         destroyCachedSprite(): void;
         drawCircle(x: number, y: number, diameter: number): Phaser.Graphics;
-        drawEllipse(x: number, y: number, width: number, height: number): Phaser.Graphics;
+        drawEllipse(centerX: number, centerY: number, halfWidth: number, halfHeight: number): Phaser.Graphics;
         drawPolygon(...path: any[]): Phaser.Graphics;
         drawRect(x: number, y: number, width: number, height: number): Phaser.Graphics;
         drawRoundedRect(x: number, y: number, width: number, height: number, radius: number): Phaser.Graphics;
@@ -5155,6 +5157,7 @@ declare module Phaser {
         scale: Phaser.Point;
         tab: number;
         tabs: number | number[];
+        testString: string;
         text: string;
         textBounds: Phaser.Rectangle;
         type: number;
@@ -5780,6 +5783,12 @@ declare module Phaser {
     module Utils {
 
         class Debug {
+
+            static GEOM_AUTO: number;
+            static GEOM_RECTANGLE: number;
+            static GEOM_CIRCLE: number;
+            static GEOM_POINT: number;
+            static GEOM_ELLIPSE: number;
 
             constructor(game: Phaser.Game);
 

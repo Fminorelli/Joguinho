@@ -1,10 +1,6 @@
 
-body { 
-    background-color: #555555
-}
-
-div.center {
-    display: table;
-    margin: 10px auto;
-    /*cursor: none;*/ /*esconde mouse*/
+* { 
+    background-color: #555555;
+    margin: 0 auto;
+    padding: 0;
 }
